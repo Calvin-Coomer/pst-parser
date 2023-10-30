@@ -1,9 +1,9 @@
 {
-    "name": "pst-parser",
+    "name": "@calvin-coomer/pst-parser",
     "version": "0.0.4",
     "type": "module",
     "main": "./src/index.js",
     "repository": {
-        "url": "https://github.com/IJMacD/pst-parser.git"
+        "url": "https://github.com/Calvin-Coomer/pst-parser"
     }
 }

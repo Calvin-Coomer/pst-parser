@@ -56,6 +56,18 @@ export class Message {
         return propertiesToObject(this.#pc.getAllProperties());
     }
 
+    getAllPropertiesWithHeaders() {
+        const keys = /** @type {number[]} */(this.#pc.keys);
+        keys.splice(0,0, parseInt("0x007D", 16))
+        const res = keys.map(key => ({
+            tag: key,
+            tagHex: "0x" + key.toString(16).padStart(4, "0"),
+            tagName: this.#pc.getTagName(key),
+            value: this.#pc.getValueByKey(key)
+        }));
+        return propertiesToObject(res);
+    }
+
     getAllRecipients () {
         const recipients = [];
 
