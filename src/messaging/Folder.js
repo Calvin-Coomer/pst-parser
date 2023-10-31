@@ -79,4 +79,22 @@ export class Folder {
     getAllProperties () {
         return propertiesToObject(this.#pc.getAllProperties());
     }
+
+    getTotalContents() {
+        function getTotalContents(folder) {
+            let count = 0
+            if (folder.hasSubfolders) {
+                const entries = folder.getSubFolderEntries();
+                for (const entry of entries) {
+                    const subF = folder.getSubFolder(entry.nid);
+                    count += getTotalContents(subF)
+                }
+            }
+            return count += folder.contentCount
+        }
+
+        return getTotalContents(this)
+    }
+
+
 }

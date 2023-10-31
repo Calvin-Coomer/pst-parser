@@ -167,17 +167,26 @@ export class TableContext extends HeapNode {
             if (columnDesc.dataType === PropertyContext.PTYPE_STRING) {
                 if (cellData === 0) return "";
                 if (getNIDType(cellData) === NID_TYPE_HID) {
-                    const hid = typeof cellData === "bigint" ? parseInt(cellData.toString()) : cellData;
-                    const { buffer, byteOffset, byteLength } = this.getItemByHID(hid);
-                    return stringFromBuffer(buffer, byteOffset, byteLength);
+                    try {
+                        const hid = typeof cellData === "bigint" ? parseInt(cellData.toString()) : cellData;
+                        const { buffer, byteOffset, byteLength } = this.getItemByHID(hid);
+                        return stringFromBuffer(buffer, byteOffset, byteLength);
+                    } catch (e) {
+                        return  ""
+                        // throw e
+                    }
                 }
             }
 
             if (columnDesc.dataType === PropertyContext.PTYPE_BINARY) {
                 const nidType = getNIDType(cellData);
                 if (nidType === NID_TYPE_HID) {
-                    const hid = typeof cellData === "bigint" ? parseInt(cellData.toString()) : cellData;
-                    return this.getItemByHID(hid);
+                    try {
+                        const hid = typeof cellData === "bigint" ? parseInt(cellData.toString()) : cellData;
+                        return this.getItemByHID(hid);                
+                    } catch (e) {
+                        return 0
+                    }
                 }
                 else {
                     throw Error("Unimplemented: Getting binary data from nidType: 0x" + h(nidType));
